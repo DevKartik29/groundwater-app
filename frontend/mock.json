@@ -1,0 +1,35 @@
+[
+  {
+    "station_id": "PB-001",
+    "name": "Ludhiana Piezometer 2",
+    "state": "Punjab",
+    "district": "Ludhiana",
+    "lat": 30.9010,
+    "lon": 75.8573,
+    "latest_level_m_bgl": 24.8,
+    "trend_m_per_year": 0.62,
+    "status": "critical"
+  },
+  {
+    "station_id": "RJ-001",
+    "name": "Jaipur Monitoring Station 1",
+    "state": "Rajasthan",
+    "district": "Jaipur",
+    "lat": 26.9124,
+    "lon": 75.7873,
+    "latest_level_m_bgl": 8.4,
+    "trend_m_per_year": -0.15,
+    "status": "safe"
+  },
+  {
+    "station_id": "MH-001",
+    "name": "Nagpur Groundwater Station 1",
+    "state": "Maharashtra",
+    "district": "Nagpur",
+    "lat": 21.1458,
+    "lon": 79.0882,
+    "latest_level_m_bgl": 13.7,
+    "trend_m_per_year": 0.28,
+    "status": "watch"
+  }
+]
