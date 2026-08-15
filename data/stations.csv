@@ -1,0 +1,31 @@
+station_id,name,state,district,lat,lon,formation
+PB-001,Ludhiana,Punjab,Ludhiana,30.9010,75.8573,alluvium_sandy
+PB-002,Amritsar,Punjab,Amritsar,31.6340,74.8723,alluvium_sandy
+PB-003,Bathinda,Punjab,Bathinda,30.2110,74.9455,alluvium_sandy
+HR-001,Karnal,Haryana,Karnal,29.6857,76.9905,alluvium_sandy
+RJ-001,Jaipur,Rajasthan,Jaipur,26.9124,75.7873,weathered_granite
+RJ-002,Jodhpur,Rajasthan,Jodhpur,26.2389,73.0243,sandstone
+RJ-003,Alwar,Rajasthan,Alwar,27.5530,76.6346,weathered_granite
+RJ-004,Barmer,Rajasthan,Barmer,25.7521,71.3967,sandstone
+MH-001,Pune,Maharashtra,Pune,18.5204,73.8567,basalt
+MH-002,Nashik,Maharashtra,Nashik,19.9975,73.7898,basalt
+MH-003,Aurangabad,Maharashtra,Chhatrapati Sambhajinagar,19.8762,75.3433,basalt
+TN-001,Coimbatore,Tamil Nadu,Coimbatore,11.0168,76.9558,weathered_granite
+TN-002,Madurai,Tamil Nadu,Madurai,9.9252,78.1198,weathered_granite
+TN-003,Cuddalore,Tamil Nadu,Cuddalore,11.7480,79.7714,sandstone
+WB-001,Krishnanagar,West Bengal,Nadia,23.4010,88.5017,alluvium_silty
+WB-002,Berhampore,West Bengal,Murshidabad,24.1027,88.2470,alluvium_silty
+UP-001,Lucknow,Uttar Pradesh,Lucknow,26.8467,80.9462,alluvium_silty
+UP-002,Varanasi,Uttar Pradesh,Varanasi,25.3176,82.9739,alluvium_silty
+BR-001,Patna,Bihar,Patna,25.5941,85.1376,alluvium_silty
+GJ-001,Rajkot,Gujarat,Rajkot,22.3039,70.8022,basalt
+GJ-002,Mehsana,Gujarat,Mehsana,23.5880,72.3693,alluvium_sandy
+AP-001,Nellore,Andhra Pradesh,Nellore,14.4426,79.9865,alluvium_sandy
+AP-002,Anantapur,Andhra Pradesh,Anantapur,14.6819,77.6006,weathered_granite
+TG-001,Hyderabad,Telangana,Hyderabad,17.3850,78.4867,weathered_granite
+TG-002,Warangal,Telangana,Warangal,17.9689,79.5941,weathered_granite
+KA-001,Bengaluru,Karnataka,Bengaluru Urban,12.9716,77.5946,weathered_granite
+KA-002,Belagavi,Karnataka,Belagavi,15.8497,74.4977,basalt
+MP-001,Indore,Madhya Pradesh,Indore,22.7196,75.8577,basalt
+MP-002,Rewa,Madhya Pradesh,Rewa,24.5364,81.3037,sandstone
+OD-001,Bhubaneswar,Odisha,Khordha,20.2961,85.8245,weathered_granite
