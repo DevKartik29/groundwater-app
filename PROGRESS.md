@@ -65,8 +65,8 @@
 ### P3 — Data Generator
 | Day | Task | Status |
 |---|---|---|
-| 1 | One station, one year, 6-hourly. **Plot it and look at it.** | ⬜ |
-| 2 | 30 stations × 3 years = 131,400 readings · **fixed random seed** · `executemany` | ⬜ |
+| 1 | One station, one year, 6-hourly. **Plot it and look at it.** | ✅ |
+| 2 | 30 stations × 3 years = 131,400 readings · **fixed random seed** · `executemany` | ✅ |
 | 3 | Inject faults (stuck, spike, gap) · **keep the list of broken rows** · leave flags as OK | ⬜ |
 | 4 | **Verify P1's trend against the decline you built in** — you're the only one with ground truth | ⬜ |
 | 5 | Tune for demo contrast: one steeply declining, one recovering | ⬜ |
@@ -94,7 +94,7 @@
 ### P6 — Data + Testing + Demo *(beginner)*
 | Day | Task | Status |
 |---|---|---|
-| 1 | **`data/stations.csv` — 30 real stations. Blocks P2 and P3. Finish today.** | ⬜ |
+| 1 | **`data/stations.csv` — 30 real stations. Blocks P2 and P3. Finish today.** | ✅ |
 | 2 | Validate readings: nulls, negatives, orphan station_ids | ⬜ |
 | 3 | Test all 5 endpoints at `/docs` · file issues with repro steps | ⬜ |
 | 4 | Check on-screen numbers vs API · hand-check one recharge · run the 5–25% rainfall check on all 30 | ⬜ |
@@ -111,6 +111,24 @@
 > Newest first. Format from `AGENTS.md` §7.
 
 <!-- entries below -->
+
+### [P3] Day 2 — 3-year multi-station bulk generator ✅ 2026-08-16
+- Built: `generate_data.py` logic to loop 30 stations and insert 131,400 rows
+- Learned: `csv.reader`, indentation inside loops, tuple unpacking, and why `executemany` is essential for bulk inserts
+- Checked: Script ran successfully without SQLite timeout/overhead
+- Next: P3 Day 3 (Inject faults)
+
+### [P3] Day 1 — single-station generator ✅ 2026-08-16
+- Built: sine-wave based groundwater depth simulator
+- Learned: math.sin for annual water cycles, timedelta loop mechanics, visual verification
+- Checked: water table correctly rises (depth decreases) during monsoon
+- Next: 3-year data generation with long-term trends
+
+### [P6] Day 1 — stations.csv ✅ 2026-08-16
+- Built: `data/stations.csv` with 30 real monitoring stations
+- Learned: researching aquifer types, mapping real geology to simplified formations, Git commit and push
+- Checked: CSV format, coordinates are valid, exact string matches for formations
+- Next: P3 generate_data.py
 
 ### [P2] Day 1 — mock.json ✅ 2026-08-15
 - Built: `frontend/mock.json` with 3 varied stations for UI testing

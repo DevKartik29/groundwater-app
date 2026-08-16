@@ -25,13 +25,21 @@ def init_db():
 
     # 3. Execute raw SQL to create the readings table
     cursor.execute("""
-        -- TODO: Copy the 'CREATE TABLE readings' SQL from 04_API_CONTRACT.md here
+    CREATE TABLE IF NOT EXISTS readings (
+        station_id          TEXT,
+        ts                  TEXT,
+        water_level_m_bgl   REAL NOT NULL,
+        quality_flag        TEXT DEFAULT 'OK',
+        quality_reason      TEXT,
+        PRIMARY KEY (station_id, ts),
+        FOREIGN KEY (station_id) REFERENCES stations(station_id)
+    )
     """)
 
     # 4. Create the index for faster lookups
     cursor.execute("""
-        -- TODO: Copy the 'CREATE INDEX' SQL from 04_API_CONTRACT.md here
-    """)
+    CREATE INDEX idx_readings_station_ts ON readings(station_id, ts);
+""")
 
     conn.commit()
     conn.close()
