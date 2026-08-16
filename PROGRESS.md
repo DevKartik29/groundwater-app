@@ -56,7 +56,7 @@
 | Day | Task | Status |
 |---|---|---|
 | 1 | **`mock.json` first** · `database.py` (2 tables + index) | ✅ |
-| 2 | Load `stations.csv`, fill `specific_yield` from P1's dict · `/api/health` · `/api/stations` · **CORS** | ⬜ |
+| 2 | Load `stations.csv`, fill `specific_yield` from P1's dict · `/api/health` · `/api/stations` · **CORS** | ✅ |
 | 3 | `/api/stations/{id}` · `/timeseries` (daily averages via SQL) | ⬜ |
 | 4 | `refresh.py` (precompute status) · `/analytics` endpoint | ⬜ |
 | 5 | `flagged` in timeseries response · time every endpoint | ⬜ |
@@ -67,7 +67,7 @@
 |---|---|---|
 | 1 | One station, one year, 6-hourly. **Plot it and look at it.** | ✅ |
 | 2 | 30 stations × 3 years = 131,400 readings · **fixed random seed** · `executemany` | ✅ |
-| 3 | Inject faults (stuck, spike, gap) · **keep the list of broken rows** · leave flags as OK | ⬜ |
+| 3 | Inject faults (stuck, spike, gap) · **keep the list of broken rows** · leave flags as OK | ✅ |
 | 4 | **Verify P1's trend against the decline you built in** — you're the only one with ground truth | ⬜ |
 | 5 | Tune for demo contrast: one steeply declining, one recovering | ⬜ |
 
@@ -84,7 +84,7 @@
 ### P5 — Map Page *(beginner)*
 | Day | Task | Status |
 |---|---|---|
-| 0–1 | JS + DOM basics · Leaflet map of India, 3 hardcoded markers (**CSS + JS tags**) | ⬜ |
+| 0–1 | JS + DOM basics · Leaflet map of India, 3 hardcoded markers (**CSS + JS tags**) | ✅ |
 | 2 | Markers from `mock.json` · popup on click · coordinate bounds check | ⬜ |
 | 3 | Switch to real API · 30 stations · click → `station.html?id=...` | ⬜ |
 | 4 | Colour dots by `status` (grey when null) · legend | ⬜ |

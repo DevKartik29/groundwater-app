@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groundwater App</title>
+    <title>Groundwater Map</title>
+    
+    <!-- 1. Leaflet CSS (from CDN) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-    <h1>Groundwater App</h1>
-    <p>Frontend is running!</p>
-</body>
+    <h1>Groundwater Stations</h1>
+    
+    <!-- 2. The empty div where Leaflet will inject the map -->
+    <div id="map"></div>
 
+    <!-- 3. Leaflet JS Engine (from CDN) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Our custom map logic -->
+    <script src="map.js"></script>
+</body>
 </html>

@@ -1,0 +1,12 @@
+/* A map div MUST have a defined height, otherwise Leaflet won't show anything! */
+#map {
+    height: 600px;
+    width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
