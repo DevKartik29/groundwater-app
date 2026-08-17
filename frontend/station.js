@@ -7,56 +7,61 @@ let stationId = params.get('id');
 async function loadStationData() {
     if (!stationId) {
         document.getElementById('station-name').innerText = "Error: No station ID provided!";
+        document.getElementById('chart-status').innerText = "Cannot load chart without a station ID.";
         return;
     }
 
     try {
-        // TODO: 2. Update the H1 tag to show the station ID
-        // Hint: document.getElementById('station-name').innerText = "Station " + stationId;
         document.getElementById('station-name').innerText = "Station " + stationId;
 
-        // TODO: 3. Fetch the timeseries data for this specific station
-        // Hint: let response = await fetch(`http://127.0.0.1:8000/api/stations/${stationId}/timeseries?days=1095`);
-        // let data = await response.json();
         let response = await fetch(
             `http://127.0.0.1:8000/api/stations/${stationId}/timeseries?days=1095`
         );
 
+        // TODO: A. Check if the server returned an error (e.g. 404 station not found)
+        if (!response.ok) {
+            document.getElementById('chart-status').innerText = "Error: Station not found.";
+            return;
+        }
+
         let data = await response.json();
-        // TODO: 4. Extract arrays for the X and Y axes
-        // Hint: We need two separate arrays for Chart.js. One for the dates, one for the water levels.
-        // let dates = data.map(row => row.ts.split('T')[0]); // Splits "2023-06-01T00:00:00" to just "2023-06-01"
-        // let levels = data.map(row => row.water_level_m_bgl);
+
+        // TODO: B. Check if the data array is empty (station exists but has no readings)
+        if (data.length === 0) {
+            document.getElementById('chart-status').innerText = "No readings available for this station.";
+            return;
+        }
+
+        // TODO: C. If we got here, data is good — hide the status message
+        document.getElementById('chart-status').innerText = "";
+
         let dates = data.map(row => row.ts.split('T')[0]);
         let levels = data.map(row => row.water_level_m_bgl);
-        // TODO: 5. Draw the Chart.js line chart
 
         const ctx = document.getElementById('hydrograph').getContext('2d');
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: dates, // X-axis
+                labels: dates,
                 datasets: [{
                     label: 'Water Level (m bgl)',
-                    data: levels, // Y-axis
+                    data: levels,
                     borderColor: 'blue',
                     borderWidth: 2,
-                    pointRadius: 0 // Hide dots, just show the line
+                    pointRadius: 0
                 }]
             },
             options: {
                 scales: {
-                    // TODO: 6. VERY IMPORTANT - Reverse the Y-axis!
-                    // Hint: y: { reverse: true }
                     y: { reverse: true }
                 }
             }
         });
 
-
     } catch (error) {
+        // TODO: D. Show a user-friendly error when the server is completely unreachable
+        document.getElementById('chart-status').innerText = "Could not connect to the server. Is it running?";
         console.error("Failed to load station data:", error);
-        document.getElementById('station-name').innerText = "Error loading data!";
     }
 }
 
@@ -65,7 +70,7 @@ loadStationData();
 
 async function loadAnalyticsData() {
     if (!stationId) return;
-    
+
     try {
         // TODO: 7. Fetch the analytics data for this station
         let response = await fetch(`http://127.0.0.1:8000/api/stations/${stationId}/analytics`);
@@ -73,16 +78,16 @@ async function loadAnalyticsData() {
 
         // TODO: 8. Update the Trend box using DOM selection
         document.getElementById('trend-val').innerText = data.trend.message;
-        
+
         // TODO: 9. Update the Recharge box
         document.getElementById('recharge-val').innerText = data.recharge.recharge_mm + " mm";
-        
+
         // TODO: 10. Update the Anomalies box
         document.getElementById('anomalies-val').innerText = data.anomalies.total + " readings flagged";
-        
+
         // TODO: 11. Update the Overall Status box
         document.getElementById('status-val').innerText = data.overall_status;
-        
+
     } catch (error) {
         console.error("Failed to load analytics:", error);
     }

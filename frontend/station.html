@@ -11,9 +11,12 @@
     <a href="index.html">← Back to Map</a>
     
     <h1 id="station-name">Loading Station...</h1>
+
+    <!-- Status message for loading / error / empty -->
+    <p id="chart-status" style="color: #666; font-style: italic;">Loading chart data...</p>
     
     <!-- The Chart.js canvas -->
-    <div style="width: 800px; height: 400px;">
+    <div id="chart-container" style="width: 800px; height: 400px;">
         <canvas id="hydrograph"></canvas>
     </div>
 
