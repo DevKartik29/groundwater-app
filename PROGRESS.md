@@ -78,7 +78,7 @@
 | 2 | `station.html` + Chart.js line chart, **y-axis reversed** (P1 verifies) | ✅ |
 | 3 | Switch to real API · read station id via `URLSearchParams` · real data | ✅ |
 | 4 | Show trend, recharge, latest reading, anomaly count | ✅ |
-| 5 | Flagged readings in red · loading / error / empty states | ⬜ |
+| 5 | Flagged readings in red · loading / error / empty states | ✅ |
 | 6 | CSS pass · `formatDepth()` from `shared.js` used on every number | ⬜ |
 
 ### P5 — Map Page *(beginner)*
@@ -111,6 +111,12 @@
 > Newest first. Format from `AGENTS.md` §7.
 
 <!-- entries below -->
+
+### [P4] Day 5 — Loading / error / empty states ✅ 2026-08-17
+- Built: `chart-status` message element, `!response.ok` guard, `data.length === 0` guard, catch-block message
+- Learned: Defensive programming — handling every path, not just the happy one
+- Checked: Valid station loads chart; fake ID shows error; no ID shows missing message; server down shows connection error
+- Next: Flagged readings in red (remaining P4 Day 5)
 
 ### [P5] Day 4 — Map colour dots + legend ✅ 2026-08-17
 - Built: `getStatusColor()` switch helper, `L.circleMarker` replacing `L.marker`, legend in `index.html`
