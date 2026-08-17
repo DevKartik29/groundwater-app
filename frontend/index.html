@@ -17,10 +17,19 @@
     <!-- 2. The empty div where Leaflet will inject the map -->
     <div id="map"></div>
 
+    <!-- Map Legend -->
+    <div id="legend" style="margin-top: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; display: inline-block;">
+        <strong>Status:</strong>
+        <span style="color: #ef4444;">●</span> Declining &nbsp;
+        <span style="color: #f59e0b;">●</span> Stable &nbsp;
+        <span style="color: #22c55e;">●</span> Recovering &nbsp;
+        <span style="color: #9ca3af;">●</span> No data
+    </div>
+
     <!-- 3. Leaflet JS Engine (from CDN) -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <!-- Our custom map logic -->
     <script src="map.js"></script>
 </body>
-</html>
+</html> 

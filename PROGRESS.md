@@ -25,8 +25,8 @@
 | 0 | 6/6 merged PRs · 6/6 science answers · repo + `.gitignore` + `backend/__init__.py` | ⬜ |
 | 1 | `stations.csv` (30 rows) · `mock.json` · `SPECIFIC_YIELD` dict · map renders · a page prints names | ⬜ |
 | 2 | DB has 30 stations + 131,400 readings · `/api/stations` returns real JSON · CORS on | ⬜ |
-| 3 | **Map → click station → real hydrograph.** The whole path works. | ⬜ |
-| 4 | `refresh.py` run · map dots coloured · station page shows trend, recharge, anomalies | ⬜ |
+| 3 | **Map → click station → real hydrograph.** The whole path works. | ✅ |
+| 4 | `refresh.py` run · map dots coloured · station page shows trend, recharge, anomalies | ✅ |
 | 5 | Feature complete. **Freeze.** | ⬜ |
 | 6 | Bugs fixed, CSS done, all empty/error states handled | ⬜ |
 | 7 | Deployed and reachable — or a conscious decision to demo locally | ⬜ |
@@ -44,9 +44,9 @@
 | Day | Task | Status |
 |---|---|---|
 | 1 | `04_API_CONTRACT.md` circulated · `analytics.py` signatures · **`SPECIFIC_YIELD` dict** (P2 needs it Day 2) · `frontend/shared.js` | ⬜ |
-| 2 | `calculate_trend()` + test on a series with a known slope (check the ×365.25) | ⬜ |
-| 3 | `calculate_recharge()` + test (Δh 1.2 m × Sy 0.14 → 168 mm) | ⬜ |
-| 4 | `detect_anomalies()` + `get_status()`, checked against P3's broken rows | ⬜ |
+| 2 | `calculate_trend()` + test on a series with a known slope (check the ×365.25) | ✅ |
+| 3 | `calculate_recharge()` + test (Δh 1.2 m × Sy 0.14 → 168 mm) | ✅ |
+| 4 | `detect_anomalies()` + `get_status()`, checked against P3's broken rows | ✅ |
 | 5 | Review everything · hunt the depth-vs-elevation bug · verify numbers by hand | ⬜ |
 | 6 | Empty and error states across the app | ⬜ |
 | 8 | `docs/methodology.md` | ⬜ |
@@ -57,8 +57,8 @@
 |---|---|---|
 | 1 | **`mock.json` first** · `database.py` (2 tables + index) | ✅ |
 | 2 | Load `stations.csv`, fill `specific_yield` from P1's dict · `/api/health` · `/api/stations` · **CORS** | ✅ |
-| 3 | `/api/stations/{id}` · `/timeseries` (daily averages via SQL) | ⬜ |
-| 4 | `refresh.py` (precompute status) · `/analytics` endpoint | ⬜ |
+| 3 | `/api/stations/{id}` · `/timeseries` (daily averages via SQL) | ✅ |
+| 4 | `refresh.py` (precompute status) · `/analytics` endpoint | ✅ |
 | 5 | `flagged` in timeseries response · time every endpoint | ⬜ |
 | 7 | Deploy to Render — **rebuild DB in the start command** | ⬜ |
 
@@ -74,10 +74,10 @@
 ### P4 — Station Page + Charts *(beginner)*
 | Day | Task | Status |
 |---|---|---|
-| 0–1 | JS + DOM basics · page that `fetch`es `mock.json` and prints names | ⬜ |
-| 2 | `station.html` + Chart.js line chart, **y-axis reversed** (P1 verifies) | ⬜ |
-| 3 | Switch to real API · read station id via `URLSearchParams` · real data | ⬜ |
-| 4 | Show trend, recharge, latest reading, anomaly count | ⬜ |
+| 0–1 | JS + DOM basics · page that `fetch`es `mock.json` and prints names | ✅ |
+| 2 | `station.html` + Chart.js line chart, **y-axis reversed** (P1 verifies) | ✅ |
+| 3 | Switch to real API · read station id via `URLSearchParams` · real data | ✅ |
+| 4 | Show trend, recharge, latest reading, anomaly count | ✅ |
 | 5 | Flagged readings in red · loading / error / empty states | ⬜ |
 | 6 | CSS pass · `formatDepth()` from `shared.js` used on every number | ⬜ |
 
@@ -86,8 +86,8 @@
 |---|---|---|
 | 0–1 | JS + DOM basics · Leaflet map of India, 3 hardcoded markers (**CSS + JS tags**) | ✅ |
 | 2 | Markers from `mock.json` · popup on click · coordinate bounds check | ⬜ |
-| 3 | Switch to real API · 30 stations · click → `station.html?id=...` | ⬜ |
-| 4 | Colour dots by `status` (grey when null) · legend | ⬜ |
+| 3 | Switch to real API · 30 stations · click → `station.html?id=...` | ✅ |
+| 4 | Colour dots by `status` (grey when null) · legend | ✅ |
 | 5 | Station list beside the map, two-way highlight | ⬜ |
 | 6 | Zoom, popup readability, small-window layout | ⬜ |
 
@@ -111,6 +111,54 @@
 > Newest first. Format from `AGENTS.md` §7.
 
 <!-- entries below -->
+
+### [P5] Day 4 — Map colour dots + legend ✅ 2026-08-17
+- Built: `getStatusColor()` switch helper, `L.circleMarker` replacing `L.marker`, legend in `index.html`
+- Learned: Leaflet circleMarker, switch statements, conditional styling from API data
+- Checked: All 30 stations render as coloured dots matching their precomputed status
+- Next: Day 5 tasks
+
+### [P4] Day 4 — Analytics Dashboard ✅ 2026-08-17
+- Built: Frontend DOM updates in `station.html` and `station.js`
+- Learned: Multiple asynchronous `fetch()` calls on a single page, manipulating `innerText`
+- Checked: The station page now correctly displays the JSON data in the dashboard boxes
+- Next: P5 Day 4 (Map styling)
+
+### [P2] Day 4 — /analytics endpoint (Part 2) ✅ 2026-08-17
+- Built: `GET /api/stations/{id}/analytics` endpoint in `backend/main.py`
+- Learned: API Contracts, Presentation Layer logic, handling `NULL` database values
+- Checked: Successfully returned structured JSON matching `04_API_CONTRACT.md`
+- Next: P4 Day 4 (Frontend UI)
+
+### [P2] Day 4 — refresh.py (Part 1) ✅ 2026-08-17
+- Built: `backend/refresh.py` to precompute analytics for all stations
+- Learned: Caching heavy math to DB instead of computing on request, explicit `INSERT` columns
+- Checked: Successfully populated `trend_m_per_year`, `recharge_mm`, `anomaly_count`, and `status`
+- Next: P2 Day 4 (Part 2: /analytics API endpoint)
+
+### [P1] Day 4 — detect_anomalies() & get_status() ✅ 2026-08-16
+- Built: `detect_anomalies()` and `get_status()` in `backend/analytics.py`
+- Learned: Using index loops to compare adjacent elements, absolute differences for spikes
+- Checked: Correctly catches anomalies and stuck sensors
+- Next: P2 Day 4 (refresh.py)
+
+### [P1] Day 3 — calculate_recharge() ✅ 2026-08-16
+- Built: `calculate_recharge()` in `backend/analytics.py`
+- Learned: Using max/min for Δh on m bgl data, Specific Yield formula
+- Checked: Test block outputs exactly 168.0 mm
+- Next: P1 Day 4 (detect_anomalies)
+
+### [P1] Day 2 — calculate_trend() ✅ 2026-08-16
+- Built: `calculate_trend()` in `backend/analytics.py`
+- Learned: `np.polyfit` for linear regression, converting dates to elapsed days, scaling daily slope to yearly
+- Checked: Test block outputs expected ~0.5 m/year trend
+- Next: P1 Day 3 (calculate_recharge)
+
+### [Day 3 Gate] Map → click station → real hydrograph ✅ 2026-08-16
+- Built: `station.html`, Chart.js plotting, and the `/timeseries` FastAPI endpoint with `GROUP BY DATE`.
+- Learned: `URLSearchParams`, Chart.js reversed y-axis, and SQL aggregations to prevent browser lag.
+- Checked: The entire golden path works end-to-end.
+- Next: P1 Analytics (`calculate_trend`, `calculate_recharge`)
 
 ### [P3] Day 2 — 3-year multi-station bulk generator ✅ 2026-08-16
 - Built: `generate_data.py` logic to loop 30 stations and insert 131,400 rows

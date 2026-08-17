@@ -49,7 +49,13 @@ def load_stations():
     cursor.execute("DELETE FROM stations")
 
     cursor.executemany(
-        "INSERT INTO stations VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        """
+        INSERT INTO stations (
+            station_id, name, state, district, lat, lon, 
+            formation, specific_yield, latest_level_m_bgl, 
+            trend_m_per_year, status, last_refreshed
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
         stations_data
     )
     

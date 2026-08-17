@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station Dashboard</title>
+    
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <a href="index.html">← Back to Map</a>
+    
+    <h1 id="station-name">Loading Station...</h1>
+    
+    <!-- The Chart.js canvas -->
+    <div style="width: 800px; height: 400px;">
+        <canvas id="hydrograph"></canvas>
+    </div>
+
+    <!-- The Analytics Dashboard -->
+    <div id="analytics-dashboard" style="margin-top: 20px; border: 1px solid #ccc; padding: 15px; width: 770px; border-radius: 8px;">
+        <h3 style="margin-top: 0;">Analytics Dashboard</h3>
+        <p><strong>Trend:</strong> <span id="trend-val">Loading...</span></p>
+        <p><strong>Recharge (2025-26):</strong> <span id="recharge-val">Loading...</span></p>
+        <p><strong>Anomalies:</strong> <span id="anomalies-val">Loading...</span></p>
+        <p><strong>Overall Status:</strong> <span id="status-val">Loading...</span></p>
+    </div>
+
+    <!-- 1. Chart.js Engine (from CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- 2. Our custom station logic -->
+    <script src="station.js"></script>
+</body>
+</html>

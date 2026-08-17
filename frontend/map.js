@@ -1,3 +1,14 @@
+// Helper: pick a dot colour based on the station's precomputed status
+function getStatusColor(status) {
+    // TODO: A. Fill in the switch statement
+    switch (status) {
+        case "Declining": return "#ef4444";  // red
+        case "Stable": return "#f59e0b";  // amber
+        case "Recovering": return "#22c55e";  // green
+        default: return "#9ca3af";  // grey (null / unknown)
+    }
+}
+
 // Initialize the map (Wait to set the view until later!)
 let map = L.map('map');
 
@@ -11,25 +22,28 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 async function loadStations() {
     try {
         // TODO: 1. Fetch the data from the FastAPI backend
-        // Hint: let response = await fetch("http://127.0.0.1:8000/api/stations");
-        // Hint: let stations = await response.json();
         let response = await fetch("http://127.0.0.1:8000/api/stations");
         let stations = await response.json();
         // TODO: 2. Create an empty Leaflet bounds object
-        // Hint: let bounds = L.latLngBounds();
         let bounds = L.latLngBounds();
         // TODO: 3. Loop through the 'stations' array
-        // Hint: for (let station of stations) { ... }
         for (let station of stations) {
 
             // --- INSIDE THE LOOP ---
-            // TODO: 4. Create a marker for each station and add it to the map
-            // Hint: L.marker([station.lat, station.lon]).addTo(map).bindPopup(station.station_id);
-            L.marker([station.lat, station.lon])
-                .addTo(map)
-                .bindPopup(station.station_id);
+            // TODO: B. Pick the colour using our helper
+            let color = getStatusColor(station.status);
+
+            // TODO: C. Replace L.marker with L.circleMarker
+            L.circleMarker([station.lat, station.lon], {
+                radius: 8,
+                fillColor: color,
+                color: '#333',
+                weight: 1,
+                fillOpacity: 0.9
+            }).addTo(map)
+                .bindPopup(`<a href="station.html?id=${station.station_id}">View ${station.station_id}</a>`);
+
             // TODO: 5. Extend the bounds box to include this new marker's coordinates
-            // Hint: bounds.extend([station.lat, station.lon]);
             bounds.extend([station.lat, station.lon]);
             // --- END OF LOOP ---
 

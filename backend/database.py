@@ -18,6 +18,8 @@ def init_db():
         specific_yield  REAL,
         latest_level_m_bgl  REAL,
         trend_m_per_year    REAL,
+        recharge_mm         REAL,
+        anomaly_count       INTEGER,
         status              TEXT,
         last_refreshed      TEXT
     )
