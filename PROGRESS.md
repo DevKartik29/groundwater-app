@@ -95,7 +95,7 @@
 | Day | Task | Status |
 |---|---|---|
 | 1 | **`data/stations.csv` — 30 real stations. Blocks P2 and P3. Finish today.** | ✅ |
-| 2 | Validate readings: nulls, negatives, orphan station_ids | ⬜ |
+| 2 | Validate readings: nulls, negatives, orphan station_ids | ✅ |
 | 3 | Test all 5 endpoints at `/docs` · file issues with repro steps | ⬜ |
 | 4 | Check on-screen numbers vs API · hand-check one recharge · run the 5–25% rainfall check on all 30 | ⬜ |
 | 5 | `docs/test-checklist.md` | ⬜ |
@@ -111,6 +111,12 @@
 > Newest first. Format from `AGENTS.md` §7.
 
 <!-- entries below -->
+
+### [P6] Day 2 — Validated Generated Readings ✅ 2026-08-18
+- Built: Fixed gap fault logic in `backend/validate_readings.py` Check 5
+- Learned: "Gap" faults skip database insertion to simulate missing data, so they must be excluded from DB row counts
+- Checked: All 5 validation checks passed (0 NULLs, 0 negative depths, 0 orphans, 0 out-of-range timestamps, 4333 exact fault matches)
+- Next: P6 Day 3 (test all endpoints at /docs)
 
 ### [P3] Day 5 — Demo contrast tuning ✅ 2026-08-18
 - Built: `DEMO_OVERRIDES` dict in `generate_data.py` — RJ-001 forced to +1.5 m/yr (steep decline), PB-002 forced to -0.5 m/yr (clear recovery)
