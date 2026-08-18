@@ -29,4 +29,3 @@ This checklist verifies the critical functionality of the Groundwater App from a
 - [ ] **Data Completeness:** Hit `/api/stations`. Are exactly 30 stations returned?
 - [ ] **Nulls and Negatives:** Verify no `null` values exist for critical fields (`water_level_m_bgl`, `ts`) and no depth values are negative (`< 0`).
 - [ ] **Recharge Sanity:** Review the calculated recharge. While the synthetic sine-wave generator produces out-of-range values (>25% of rainfall) for sandy regions, verify the math executes correctly without throwing errors.
-- [ ] **Endpoint Contracts:** Hit `/api/stations/search?state=Punjab`. Does it correctly filter and return only Punjab stations?
