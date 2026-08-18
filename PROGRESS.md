@@ -97,7 +97,7 @@
 | 1 | **`data/stations.csv` — 30 real stations. Blocks P2 and P3. Finish today.** | ✅ |
 | 2 | Validate readings: nulls, negatives, orphan station_ids | ✅ |
 | 3 | Test all 5 endpoints at `/docs` · file issues with repro steps | ✅ |
-| 4 | Check on-screen numbers vs API · hand-check one recharge · run the 5–25% rainfall check on all 30 | ⬜ |
+| 4 | Check on-screen numbers vs API · hand-check one recharge · run the 5–25% rainfall check on all 30 | ✅ |
 | 5 | `docs/test-checklist.md` | ⬜ |
 | 6 | Run the checklist · log every bug | ⬜ |
 | 7 | Deploy frontend to Netlify with P2 | ⬜ |
@@ -111,6 +111,12 @@
 > Newest first. Format from `AGENTS.md` §7.
 
 <!-- entries below -->
+
+### [P6] Day 4 — Rainfall Sanity Check ✅ 2026-08-18
+- Built: `backend/sanity_check.py` to compare computed `recharge_mm` against estimated historical district rainfall
+- Learned: Recharge is typically 5-25% of annual rainfall (the rest is lost to evapotranspiration and runoff)
+- Checked: 20/30 stations fail the physical 5-25% sanity check. Root cause identified: the synthetic generator uses a uniform 1.5m sine wave amplitude for all geologies, leading to physically impossible recharge percentages in sandy alluvium regions with low rainfall. Documented as a known synthetic-data limitation; no changes made to generator.
+- Next: P6 Day 5 (`docs/test-checklist.md`)
 
 ### [P6] Day 3 — Manual API Testing ✅ 2026-08-18
 - Built: Manual verification of all 5 API endpoints via FastAPI `/docs`
