@@ -69,7 +69,7 @@
 | 2 | 30 stations × 3 years = 131,400 readings · **fixed random seed** · `executemany` | ✅ |
 | 3 | Inject faults (stuck, spike, gap) · **keep the list of broken rows** · leave flags as OK | ✅ |
 | 4 | **Verify P1's trend against the decline you built in** — you're the only one with ground truth | ✅ |
-| 5 | Tune for demo contrast: one steeply declining, one recovering | ⬜ |
+| 5 | Tune for demo contrast: one steeply declining, one recovering | ✅ |
 
 ### P4 — Station Page + Charts *(beginner)*
 | Day | Task | Status |
@@ -111,6 +111,12 @@
 > Newest first. Format from `AGENTS.md` §7.
 
 <!-- entries below -->
+
+### [P3] Day 5 — Demo contrast tuning ✅ 2026-08-18
+- Built: `DEMO_OVERRIDES` dict in `generate_data.py` — RJ-001 forced to +1.5 m/yr (steep decline), PB-002 forced to -0.5 m/yr (clear recovery)
+- Learned: Overriding after the random roll preserves seed-42 state for all other stations
+- Checked: RJ-001 computed +1.683 (Declining), PB-002 computed -0.317 (Recovering). All other 28 stations unchanged. Known limitation: HR-001 and KA-001 classify as Stable instead of Recovering due to +0.18 m/yr seasonal bias — documented, not an analytics bug.
+- Next: P3 tasks complete. Support P6 validation and demo prep.
 
 ### [P3] Day 4 — Verified P1's trend against ground truth ✅ 2026-08-18
 - Built: `backend/verify_trends.py` — independent verification of `calculate_trend()` and `get_status()`

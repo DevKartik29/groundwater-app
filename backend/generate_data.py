@@ -90,6 +90,12 @@ if __name__ == "__main__":
     # We will pass this empty list into our function to collect the broken row metadata
     secret_broken_list = []
     
+    # P3 Day 5: Force specific trends for demo contrast
+    DEMO_OVERRIDES = {
+        "RJ-001": 1.5,    # steep decline — over-exploited aquifer
+        "PB-002": -0.5    # clear recovery — successful intervention
+    }
+    
     # TODO: 7. Open and read 'data/stations.csv'
     # Hint: use the csv module. Skip the header row, then loop through the rest.
     
@@ -110,6 +116,10 @@ if __name__ == "__main__":
                 trend_m_per_year = random.uniform(-0.4, -0.1)
             else:
                 trend_m_per_year = random.uniform(0.1, 0.8)
+            
+            # P3 Day 5: Override trend for demo-contrast stations
+            if station_id in DEMO_OVERRIDES:
+                trend_m_per_year = DEMO_OVERRIDES[station_id]
                 
             # TODO: 9. Generate the 3-year data
             # data = generate_station_data(station_id, start, trend_m_per_year, secret_broken_list, days=1095)
