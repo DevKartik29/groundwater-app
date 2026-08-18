@@ -20,7 +20,7 @@ def run_refresh():
         # TODO: 1. Fetch all water_level_m_bgl and ts for this station from `readings`, ordered by ts ASC
         # Hint: rows = cursor.execute("SELECT ts, water_level_m_bgl FROM readings WHERE station_id=? ORDER BY ts ASC", (station_id,)).fetchall()
         rows = cursor.execute(
-            "SELECT ts, water_level_m_bgl FROM readings WHERE station_id=? ORDER BY ts ASC",
+            "SELECT ts, water_level_m_bgl FROM readings WHERE station_id=? AND quality_flag = 'OK' ORDER BY ts ASC",
             (station_id,)
         ).fetchall()
             
