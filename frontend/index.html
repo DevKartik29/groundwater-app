@@ -3,33 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groundwater Map</title>
-    
-    <!-- 1. Leaflet CSS (from CDN) -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <!-- Custom CSS -->
+    <title>Groundwater Command Center</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Groundwater Stations</h1>
-    
-    <!-- 2. The empty div where Leaflet will inject the map -->
+
+    <!-- Immersive Map Background -->
     <div id="map"></div>
 
-    <!-- Map Legend -->
-    <div id="legend" style="margin-top: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; display: inline-block;">
-        <strong>Status:</strong>
-        <span style="color: #ef4444;">●</span> Declining &nbsp;
-        <span style="color: #f59e0b;">●</span> Stable &nbsp;
-        <span style="color: #22c55e;">●</span> Recovering &nbsp;
-        <span style="color: #9ca3af;">●</span> No data
+    <!-- HUD Overlay -->
+    <div class="hud-container">
+        
+        <!-- Top Nav HUD -->
+        <header class="hud-panel nav-top">
+            <div class="nav-brand">💧 GW COMMAND CENTER</div>
+            <div style="font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;" id="header-status">
+                STATUS: ANALYZING NETWORK...
+            </div>
+        </header>
+
+        <!-- Left Drawer HUD -->
+        <aside class="hud-panel left-drawer">
+            <div class="hud-section">
+                <div class="text-label">NETWORK INTELLIGENCE</div>
+                <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.5rem;">Track multi-year trends and sensor anomalies across the national monitoring network.</p>
+            </div>
+
+            <div class="hud-section">
+                <div class="text-label" style="margin-bottom: 1rem;">NETWORK STATUS</div>
+                <div class="donut-wrapper">
+                    <canvas id="status-donut"></canvas>
+                </div>
+                <div class="legend-list">
+                    <div class="legend-item"><span class="dot bg-red"></span> <strong id="donut-declining" class="text-bright">-</strong> <span class="text-muted">Declining</span></div>
+                    <div class="legend-item"><span class="dot bg-amber"></span> <strong id="donut-stable" class="text-bright">-</strong> <span class="text-muted">Stable</span></div>
+                    <div class="legend-item"><span class="dot bg-green"></span> <strong id="donut-recovering" class="text-bright">-</strong> <span class="text-muted">Recovering</span></div>
+                </div>
+            </div>
+
+            <div class="hud-section" style="background: rgba(255,255,255,0.02);">
+                <div class="text-label" style="margin-bottom: 0.5rem;">SUMMARY</div>
+                <p id="interpretation-text" style="font-size: 0.9rem;">Loading intelligence...</p>
+            </div>
+
+            <div class="hud-section" style="flex: 1; border-bottom: none;">
+                <div class="text-label">CRITICAL HIGHLIGHTS</div>
+                <div id="highlights-container" style="margin-top: 0.5rem;">
+                    <p class="text-muted" style="font-size: 0.85rem;">Analyzing signals...</p>
+                </div>
+            </div>
+        </aside>
     </div>
 
-    <!-- 3. Leaflet JS Engine (from CDN) -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <!-- Our custom map logic -->
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="shared.js"></script>
     <script src="map.js"></script>
 </body>
-</html> 
+</html>

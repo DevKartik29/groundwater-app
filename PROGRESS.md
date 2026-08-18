@@ -99,7 +99,7 @@
 | 3 | Test all 5 endpoints at `/docs` · file issues with repro steps | ✅ |
 | 4 | Check on-screen numbers vs API · hand-check one recharge · run the 5–25% rainfall check on all 30 | ✅ |
 | 5 | `docs/test-checklist.md` | ✅ |
-| 6 | Run the checklist · log every bug | ⬜ |
+| 6 | Run the checklist · log every bug | ✅ |
 | 7 | Deploy frontend to Netlify with P2 | ⬜ |
 | 8 | `README.md` (test it on a clean machine) · slide deck | ⬜ |
 | 9 | **Demo the whole app solo** · record the backup video | ⬜ |
@@ -112,11 +112,19 @@
 
 <!-- entries below -->
 
+### [P4/P5] Day 6 — QA Bug Fixes ✅ 2026-08-18
+- Built: Fixed 3 manual QA bugs — updated Leaflet popups in `map.js` (Bug 1), implemented `formatDepth()` in new `shared.js` and wired to Chart.js tooltip (Bug 2), added spike-detection heuristic for point colours (Bug 3).
+- Learned: Chart.js tooltip callbacks, mapping arrays to point properties, Leaflet popup string interpolation.
+- Checked: Popups show full details, tooltips are properly formatted, spikes are red.
+- Next: P4/P5 Day 6 CSS passes and layout tuning.
+
+### [P6] Day 6 — Run the Checklist ✅ 2026-08-18
+- Built: Executed the manual testing script (`test-checklist.md`) across all application paths.
+- Learned: QA methodology, tracking distinct UI vs data bugs, formatting bug reports with steps to reproduce and expected behaviour.
+- Checked: 4 bugs identified (Search endpoint hallucination, map popup missing details, chart tooltip raw decimals, anomalous points not visually distinct). Bug 4 resolved immediately.
+- Next: P4 and P5 fix the remaining frontend bugs.
+
 ### [P6] Day 5 — Wrote Test Checklist ✅ 2026-08-18
-- Built: `docs/test-checklist.md` covering the map page, station page, edge cases, and API integrity
-- Learned: Structuring an end-to-end testing script to ensure all paths (happy and failure) are explicitly verified before deployment
-- Checked: The checklist covers all completed P1-P5 deliverables
-- Next: P6 Day 6 (Run the checklist)
 
 ### [P6] Day 4 — Rainfall Sanity Check ✅ 2026-08-18
 - Built: `backend/sanity_check.py` to compare computed `recharge_mm` against estimated historical district rainfall

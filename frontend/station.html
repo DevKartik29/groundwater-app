@@ -3,36 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Station Dashboard</title>
-    
+    <title>Station Command HUD</title>
+    <!-- Leaflet CSS for map background -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <a href="index.html">← Back to Map</a>
-    
-    <h1 id="station-name">Loading Station...</h1>
 
-    <!-- Status message for loading / error / empty -->
-    <p id="chart-status" style="color: #666; font-style: italic;">Loading chart data...</p>
-    
-    <!-- The Chart.js canvas -->
-    <div id="chart-container" style="width: 800px; height: 400px;">
-        <canvas id="hydrograph"></canvas>
+    <!-- Immersive Map Background -->
+    <div id="map"></div>
+
+    <!-- HUD Overlay -->
+    <div class="hud-container">
+        <aside class="hud-panel station-hud">
+            
+            <header class="hud-header">
+                <a href="index.html" class="back-btn">&larr; Back to Network</a>
+                <h1 class="station-title" id="station-name">Loading...</h1>
+                <div class="station-subtitle" id="station-subtitle">ID: --- &bull; ---</div>
+                <div id="status-val" class="status-badge bg-gray">LOADING</div>
+            </header>
+
+            <div class="metrics-grid">
+                <div class="metric-box" id="card-trend">
+                    <div class="text-label">TREND</div>
+                    <div class="metric-val">
+                        <span id="trend-icon"></span>
+                        <span id="trend-val">...</span>
+                        <span style="font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);">m/yr</span>
+                    </div>
+                    <div class="text-muted" style="font-size: 0.8rem;" id="trend-sub">Analyzing...</div>
+                </div>
+
+                <div class="metric-box">
+                    <div class="text-label">RECHARGE</div>
+                    <div class="metric-val">
+                        <span>💧</span>
+                        <span id="recharge-val" class="text-bright">...</span>
+                        <span style="font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);">mm</span>
+                    </div>
+                    <div class="text-muted" style="font-size: 0.8rem;">Water Year 25-26</div>
+                </div>
+
+                <div class="metric-box" id="card-anomalies">
+                    <div class="text-label">ANOMALIES</div>
+                    <div class="metric-val">
+                        <span id="anomaly-icon">✅</span>
+                        <span id="anomalies-val" class="text-bright">0</span>
+                    </div>
+                    <div class="text-muted" style="font-size: 0.8rem;" id="anomaly-sub">Clean record</div>
+                </div>
+
+                <div class="metric-box" id="card-status">
+                    <div class="text-label">STATUS</div>
+                    <div class="metric-val text-bright" id="status-card-val" style="font-size: 1.1rem; text-transform: uppercase;">
+                        ...
+                    </div>
+                    <div class="text-muted" style="font-size: 0.8rem;" id="status-card-sub">Assessing...</div>
+                </div>
+            </div>
+
+            <div class="chart-hud-wrapper">
+                <div class="text-label" style="position: absolute; top: 1.5rem; left: 1.5rem;">HYDROGRAPH (m bgl)</div>
+                <div id="chart-status" style="position: absolute; top: 40%; left: 0; width: 100%; text-align: center; color: var(--text-secondary);">Loading graph...</div>
+                <div style="height: 100%; width: 100%; padding-top: 1.5rem;">
+                    <canvas id="hydrograph"></canvas>
+                </div>
+            </div>
+
+            <div class="interpretation-box">
+                <div class="text-label" style="margin-bottom: 0.5rem; color: var(--color-brand);">INTELLIGENCE REPORT</div>
+                <p id="interpretation-text" style="font-size: 0.9rem; line-height: 1.6;">Analyzing signals...</p>
+            </div>
+
+            <div class="metadata-footer">
+                <div><strong>Station ID:</strong> <span id="meta-id" class="text-bright"></span></div>
+                <div><strong>Specific Yield:</strong> <span id="meta-sy" class="text-bright"></span></div>
+                <div><strong>Formation:</strong> <span id="meta-formation" class="text-bright"></span></div>
+                <div><strong>Refreshed:</strong> <span id="meta-refreshed" class="text-bright"></span></div>
+            </div>
+        </aside>
     </div>
 
-    <!-- The Analytics Dashboard -->
-    <div id="analytics-dashboard" style="margin-top: 20px; border: 1px solid #ccc; padding: 15px; width: 770px; border-radius: 8px;">
-        <h3 style="margin-top: 0;">Analytics Dashboard</h3>
-        <p><strong>Trend:</strong> <span id="trend-val">Loading...</span></p>
-        <p><strong>Recharge (2025-26):</strong> <span id="recharge-val">Loading...</span></p>
-        <p><strong>Anomalies:</strong> <span id="anomalies-val">Loading...</span></p>
-        <p><strong>Overall Status:</strong> <span id="status-val">Loading...</span></p>
-    </div>
-
-    <!-- 1. Chart.js Engine (from CDN) -->
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- 2. Our custom station logic -->
+    <script src="shared.js"></script>
     <script src="station.js"></script>
 </body>
 </html>

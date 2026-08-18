@@ -80,8 +80,7 @@ print("\n--- Check 5: Fault injection vs database ---")
 with open("data/broken_rows.json", "r") as f:
     broken_rows = json.load(f)
 
-# Gaps skip the DB insert entirely, so we only count spikes and stucks
-expected_fault_count = len([row for row in broken_rows if row["type"] != "gap"])
+expected_fault_count = len(broken_rows)
 
 actual_fault_count = cur.execute("""
     SELECT COUNT(*)
@@ -89,8 +88,8 @@ actual_fault_count = cur.execute("""
     WHERE quality_flag != 'OK'
 """).fetchone()[0]
 
-print(f"  Non-gap faults in JSON: {expected_fault_count}")
-print(f"  Faults in database:     {actual_fault_count}")
+print(f"  Faults in broken_rows.json: {expected_fault_count}")
+print(f"  Faults in database:          {actual_fault_count}")
 
 if expected_fault_count == actual_fault_count:
     print("  Fault count: PASS ✅")
