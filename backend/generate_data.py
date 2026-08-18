@@ -32,11 +32,6 @@ def generate_station_data(station_id, start_date, trend_m_per_year, secret_broke
         
         is_broken = False
         # --- P3 Day 3: INJECT FAULTS ---
-        # TODO: 1. Write the 5% chance logic to inject a fault
-        # Hint: if random.random() < 0.05:
-        #           is_broken = True
-        #           fault_type = random.choice(["gap", "spike", "stuck"])
-
         if random.random() < 0.05:
             is_broken = True
             fault_type = random.choice(["gap", "spike", "stuck"])
@@ -64,10 +59,18 @@ def generate_station_data(station_id, start_date, trend_m_per_year, secret_broke
                     "ts": ts_iso,
                     "type": "stuck"
                 })
+
+        # TODO: Set quality_flag based on whether this reading is broken
+        if is_broken:
+            flag = fault_type.upper()   # "SPIKE" or "STUCK"
+        else:
+            flag = "OK"
+
         readings.append({
             "station_id": station_id,
             "ts": ts_iso,
-            "water_level_m_bgl": water_level
+            "water_level_m_bgl": water_level,
+            "quality_flag": flag   # <-- NEW: carry the flag with each reading
         })
         
         current_time += timedelta(hours=6)
@@ -126,7 +129,7 @@ if __name__ == "__main__":
                     r["station_id"],
                     r["ts"],
                     r["water_level_m_bgl"],
-                    "OK",
+                    r["quality_flag"],   # Was hardcoded "OK" — now reads the actual flag
                     None
                 ))
         

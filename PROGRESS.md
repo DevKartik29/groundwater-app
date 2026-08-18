@@ -68,7 +68,7 @@
 | 1 | One station, one year, 6-hourly. **Plot it and look at it.** | ✅ |
 | 2 | 30 stations × 3 years = 131,400 readings · **fixed random seed** · `executemany` | ✅ |
 | 3 | Inject faults (stuck, spike, gap) · **keep the list of broken rows** · leave flags as OK | ✅ |
-| 4 | **Verify P1's trend against the decline you built in** — you're the only one with ground truth | ⬜ |
+| 4 | **Verify P1's trend against the decline you built in** — you're the only one with ground truth | ✅ |
 | 5 | Tune for demo contrast: one steeply declining, one recovering | ⬜ |
 
 ### P4 — Station Page + Charts *(beginner)*
@@ -111,6 +111,12 @@
 > Newest first. Format from `AGENTS.md` §7.
 
 <!-- entries below -->
+
+### [P3] Day 4 — Verified P1's trend against ground truth ✅ 2026-08-18
+- Built: `backend/verify_trends.py` — independent verification of `calculate_trend()` and `get_status()`
+- Learned: Replaying a fixed seed to recover ground-truth values; systematic bias from incomplete seasonal cycles
+- Checked: `calculate_trend()` exact on synthetic data (5 slopes + 2 edge cases). `get_status()` correct on all 10 boundary cases. 28/30 station classifications match. 2 mismatches (HR-001, KA-001) caused by +0.18 m/yr seasonal bias in generator, not analytics bugs.
+- Next: P3 Day 5 — tune demo contrast (one steeply declining, one recovering)
 
 ### [P4] Day 5 — Loading / error / empty states ✅ 2026-08-17
 - Built: `chart-status` message element, `!response.ok` guard, `data.length === 0` guard, catch-block message
