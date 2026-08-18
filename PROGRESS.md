@@ -96,7 +96,7 @@
 |---|---|---|
 | 1 | **`data/stations.csv` — 30 real stations. Blocks P2 and P3. Finish today.** | ✅ |
 | 2 | Validate readings: nulls, negatives, orphan station_ids | ✅ |
-| 3 | Test all 5 endpoints at `/docs` · file issues with repro steps | ⬜ |
+| 3 | Test all 5 endpoints at `/docs` · file issues with repro steps | ✅ |
 | 4 | Check on-screen numbers vs API · hand-check one recharge · run the 5–25% rainfall check on all 30 | ⬜ |
 | 5 | `docs/test-checklist.md` | ⬜ |
 | 6 | Run the checklist · log every bug | ⬜ |
@@ -111,6 +111,12 @@
 > Newest first. Format from `AGENTS.md` §7.
 
 <!-- entries below -->
+
+### [P6] Day 3 — Manual API Testing ✅ 2026-08-18
+- Built: Manual verification of all 5 API endpoints via FastAPI `/docs`
+- Learned: Interactive API documentation (Swagger UI) allows rapid testing of API contracts without writing frontend code
+- Checked: All endpoints return expected formats, correct status codes (200, 404, 422), and handle edge cases gracefully
+- Next: P6 Day 4 (Check on-screen numbers vs API, hand-check recharge, rainfall sanity check)
 
 ### [P6] Day 2 — Validated Generated Readings ✅ 2026-08-18
 - Built: Fixed gap fault logic in `backend/validate_readings.py` Check 5
