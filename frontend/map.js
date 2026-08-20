@@ -22,7 +22,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 async function loadStations() {
     try {
         // TODO: 1. Fetch the data from the FastAPI backend
-        let response = await fetch("http://127.0.0.1:8000/api/stations");
+        let response = await fetch("/api/stations");
         let stations = await response.json();
 
         // Update Dashboard Summary, Chart, and Interpretation

@@ -4,7 +4,9 @@
 let params = new URLSearchParams(window.location.search);
 let stationId = params.get('id');
 
-async function loadStationData() {
+let currentChart = null; // Track the chart instance for re-drawing on range change
+
+async function loadStationData(days = 1095) {
     if (!stationId) {
         document.getElementById('station-name').innerText = "Error: No station ID provided!";
         document.getElementById('chart-status').innerText = "Cannot load chart without a station ID.";
@@ -15,12 +17,11 @@ async function loadStationData() {
         document.getElementById('station-name').innerText = "Station " + stationId;
 
         let response = await fetch(
-            `http://127.0.0.1:8000/api/stations/${stationId}/timeseries?days=1095`
+            `/api/stations/${stationId}/timeseries?days=${days}`
         );
 
         let statusDiv = document.getElementById('chart-status');
 
-        // TODO: A. Check if the server returned an error (e.g. 404 station not found)
         if (!response.ok) {
             statusDiv.innerText = "Error: Station not found.";
             statusDiv.classList.add('error-state');
@@ -29,19 +30,18 @@ async function loadStationData() {
 
         let data = await response.json();
 
-        // TODO: B. Check if the data array is empty (station exists but has no readings)
         if (data.length === 0) {
             statusDiv.innerText = "No readings available for this station.";
             statusDiv.classList.add('error-state');
             return;
         }
 
-        // TODO: C. If we got here, data is good — hide the status message
         statusDiv.style.display = "none";
 
         let dates = data.map(row => row.ts.split('T')[0]);
         let levels = data.map(row => row.water_level_m_bgl);
 
+        // Detect anomalous points (spikes)
         let pointColors = levels.map((val, i, arr) => {
             let isSpike = false;
             if (i > 0 && Math.abs(val - arr[i-1]) > 5) isSpike = true;
@@ -49,27 +49,34 @@ async function loadStationData() {
             return (data[i].flagged || isSpike) ? '#ef4444' : '#3b82f6';
         });
 
+        let anomalyCount = pointColors.filter(c => c === '#ef4444').length;
         let pointRadii = pointColors.map(c => c === '#ef4444' ? 6 : 0);
         let pointStyles = pointColors.map(c => c === '#ef4444' ? 'crossRot' : 'circle');
         let pointBorderWidths = pointColors.map(c => c === '#ef4444' ? 2 : 1);
 
+        // Destroy previous chart if re-drawing (range button click)
+        if (currentChart) {
+            currentChart.destroy();
+        }
+
         const ctx = document.getElementById('hydrograph').getContext('2d');
-        new Chart(ctx, {
+        currentChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'Water Level (m bgl)',
+                    label: 'Water Depth (m bgl)',
                     data: levels,
                     borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.08)',
                     borderWidth: 2,
                     fill: true,
                     pointBackgroundColor: pointColors,
                     pointBorderColor: pointColors,
                     pointRadius: pointRadii,
                     pointStyle: pointStyles,
-                    pointBorderWidth: pointBorderWidths
+                    pointBorderWidth: pointBorderWidths,
+                    tension: 0.1
                 }]
             },
             options: {
@@ -84,7 +91,7 @@ async function loadStationData() {
                     },
                     x: {
                         grid: { display: false },
-                        ticks: { color: '#94a3b8' }
+                        ticks: { color: '#94a3b8', maxTicksLimit: 12 }
                     }
                 },
                 plugins: {
@@ -105,8 +112,21 @@ async function loadStationData() {
             }
         });
 
+        // Populate stats bar
+        let validLevels = levels.filter(v => v != null);
+        let minVal = Math.min(...validLevels);
+        let maxVal = Math.max(...validLevels);
+        let avgVal = validLevels.reduce((a, b) => a + b, 0) / validLevels.length;
+
+        document.getElementById('stat-min').innerText = minVal.toFixed(2) + ' m bgl';
+        document.getElementById('stat-max').innerText = maxVal.toFixed(2) + ' m bgl';
+        document.getElementById('stat-avg').innerText = avgVal.toFixed(2) + ' m bgl';
+        document.getElementById('stat-readings').innerText = validLevels.length.toLocaleString();
+        document.getElementById('stat-anomalies').innerText = anomalyCount.toLocaleString();
+        let pct = ((anomalyCount / validLevels.length) * 100).toFixed(2);
+        document.getElementById('stat-anomaly-pct').innerText = pct + '% of total';
+
     } catch (error) {
-        // TODO: D. Show a user-friendly error when the server is completely unreachable
         let statusDiv = document.getElementById('chart-status');
         statusDiv.innerText = "Could not connect to the server. Is it running?";
         statusDiv.classList.add('error-state');
@@ -114,6 +134,16 @@ async function loadStationData() {
         console.error("Failed to load station data:", error);
     }
 }
+
+// Wire up range buttons
+document.querySelectorAll('.range-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        let days = parseInt(this.dataset.days);
+        loadStationData(days);
+    });
+});
 
 // Call the function to actually run it!
 loadStationData();
@@ -123,7 +153,7 @@ async function loadAnalyticsData() {
 
     try {
         // TODO: 7. Fetch the analytics data for this station
-        let response = await fetch(`http://127.0.0.1:8000/api/stations/${stationId}/analytics`);
+        let response = await fetch(`/api/stations/${stationId}/analytics`);
         let data = await response.json();
 
         // 8. Update the Trend box
@@ -206,8 +236,20 @@ async function loadAnalyticsData() {
 
         document.getElementById('interpretation-text').innerHTML = interpText;
 
+        // Update the top nav bar status
+        let navStatusText = document.getElementById('nav-status-text');
+        if (navStatusText) {
+            if (data.overall_status === "Declining") {
+                navStatusText.innerHTML = '<span class="text-red">⚠ NETWORK STRESS DETECTED</span>';
+            } else if (data.overall_status === "Recovering") {
+                navStatusText.innerHTML = '<span class="text-green">✓ RECOVERY IN PROGRESS</span>';
+            } else {
+                navStatusText.innerHTML = '<span class="text-amber">STABLE CONDITIONS</span>';
+            }
+        }
+
         // Fetch Metadata for Header and Footer
-        let metaResponse = await fetch("http://127.0.0.1:8000/api/stations");
+        let metaResponse = await fetch("/api/stations");
         let allStations = await metaResponse.json();
         let stationMeta = allStations.find(s => s.station_id === stationId);
         

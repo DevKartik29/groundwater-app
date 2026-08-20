@@ -49,7 +49,7 @@
 | 4 | `detect_anomalies()` + `get_status()`, checked against P3's broken rows | ✅ |
 | 5 | Review everything · hunt the depth-vs-elevation bug · verify numbers by hand | ⬜ |
 | 6 | Empty and error states across the app | ⬜ |
-| 8 | `docs/methodology.md` | ⬜ |
+| 8 | `docs/methodology.md` | ✅ |
 | — | **Daily:** PR reviews within hours · run the evening merge · keep this file true | ⬜ |
 
 ### P2 — Backend API + Database
@@ -59,7 +59,7 @@
 | 2 | Load `stations.csv`, fill `specific_yield` from P1's dict · `/api/health` · `/api/stations` · **CORS** | ✅ |
 | 3 | `/api/stations/{id}` · `/timeseries` (daily averages via SQL) | ✅ |
 | 4 | `refresh.py` (precompute status) · `/analytics` endpoint | ✅ |
-| 5 | `flagged` in timeseries response · time every endpoint | ⬜ |
+| 5 | `flagged` in timeseries response · time every endpoint | ✅ |
 | 7 | Deploy to Render — **rebuild DB in the start command** | ⬜ |
 
 ### P3 — Data Generator

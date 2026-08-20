@@ -2,7 +2,9 @@
 from fastapi import FastAPI, HTTPException
 # pyrefly: ignore [missing-import]
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 import sqlite3
+import os
 
 app = FastAPI()
 
@@ -15,9 +17,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Absolute paths for deployment
+DB_PATH = os.path.join(os.path.dirname(__file__), "..", "groundwater.db")
+FRONTEND_PATH = os.path.join(os.path.dirname(__file__), "..", "frontend")
+
 def get_db_connection():
     """Helper function to open a database connection and return rows as dictionaries."""
-    conn = sqlite3.connect("groundwater.db")
+    conn = sqlite3.connect(DB_PATH)
     # This magic line makes SQLite return rows as dictionaries instead of plain tuples!
     conn.row_factory = sqlite3.Row
     return conn
@@ -79,7 +85,8 @@ async def get_station_timeseries(station_id: str, days: int = 1095):
     query = """
         SELECT
             DATE(ts) AS ts,
-            AVG(water_level_m_bgl) AS water_level_m_bgl
+            AVG(water_level_m_bgl) AS water_level_m_bgl,
+            MAX(CASE WHEN quality_flag != 'OK' THEN 1 ELSE 0 END) AS flagged
         FROM readings
         WHERE station_id = ?
         GROUP BY DATE(ts)
@@ -175,4 +182,6 @@ async def get_station_analytics(station_id: str):
         "anomalies": anomalies_dict,
         "overall_status": status_val
     }
-    pass
+
+# Mount the frontend static files at the root
+app.mount("/", StaticFiles(directory=FRONTEND_PATH, html=True), name="frontend")

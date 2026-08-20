@@ -13,9 +13,17 @@
     <!-- Immersive Map Background -->
     <div id="map"></div>
 
-    <!-- HUD Overlay -->
-    <div class="hud-container">
-        <aside class="hud-panel station-hud">
+    <!-- Top Nav Bar -->
+    <nav class="station-nav hud-panel">
+        <div class="nav-brand">🏛 GW COMMAND CENTER</div>
+        <div id="nav-status" class="text-muted" style="font-size: 0.85rem;">STATUS: <span id="nav-status-text">LOADING...</span></div>
+    </nav>
+
+    <!-- HUD Overlay: Two-column layout -->
+    <div class="hud-container station-layout">
+
+        <!-- LEFT SIDEBAR — existing info panel (untouched content) -->
+        <aside class="hud-panel station-sidebar">
             
             <header class="hud-header">
                 <a href="index.html" class="back-btn">&larr; Back to Network</a>
@@ -63,14 +71,6 @@
                 </div>
             </div>
 
-            <div class="chart-hud-wrapper">
-                <div class="text-label" style="position: absolute; top: 1.5rem; left: 1.5rem;">HYDROGRAPH (m bgl)</div>
-                <div id="chart-status" style="position: absolute; top: 40%; left: 0; width: 100%; text-align: center; color: var(--text-secondary);">Loading graph...</div>
-                <div style="height: 100%; width: 100%; padding-top: 1.5rem;">
-                    <canvas id="hydrograph"></canvas>
-                </div>
-            </div>
-
             <div class="interpretation-box">
                 <div class="text-label" style="margin-bottom: 0.5rem; color: var(--color-brand);">INTELLIGENCE REPORT</div>
                 <p id="interpretation-text" style="font-size: 0.9rem; line-height: 1.6;">Analyzing signals...</p>
@@ -79,10 +79,82 @@
             <div class="metadata-footer">
                 <div><strong>Station ID:</strong> <span id="meta-id" class="text-bright"></span></div>
                 <div><strong>Specific Yield:</strong> <span id="meta-sy" class="text-bright"></span></div>
+                <div><strong>State:</strong> <span id="meta-state" class="text-bright"></span></div>
+                <div><strong>District:</strong> <span id="meta-district" class="text-bright"></span></div>
                 <div><strong>Formation:</strong> <span id="meta-formation" class="text-bright"></span></div>
                 <div><strong>Refreshed:</strong> <span id="meta-refreshed" class="text-bright"></span></div>
             </div>
         </aside>
+
+        <!-- RIGHT MAIN CONTENT — large hydrograph -->
+        <main class="hud-panel station-main">
+            <div class="chart-header">
+                <div class="text-label">HYDROGRAPH <span style="font-weight: 400; letter-spacing: 0;">(WATER DEPTH IN METERS BELOW GROUND LEVEL)</span></div>
+                <div class="chart-range-btns">
+                    <button class="range-btn" data-days="365">1 YEAR</button>
+                    <button class="range-btn active" data-days="1095">3 YEARS</button>
+                    <button class="range-btn" data-days="1825">5 YEARS</button>
+                    <button class="range-btn" data-days="9999">ALL</button>
+                </div>
+            </div>
+            <div id="chart-status" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--text-secondary);">Loading graph...</div>
+            <div class="chart-canvas-wrapper">
+                <canvas id="hydrograph"></canvas>
+            </div>
+            <div class="chart-legend">
+                <span class="legend-entry"><span class="legend-dot" style="background: #3b82f6;"></span> Water Depth (m bgl)</span>
+                <span class="legend-entry"><span style="color: #ef4444; font-size: 1.1rem;">✕</span> Anomalous Reading</span>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-icon">≈</div>
+                    <div>
+                        <div class="stat-value" id="stat-min">--</div>
+                        <div class="stat-label">MIN DEPTH</div>
+                        <div class="stat-sub">Shallowest</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon" style="color: var(--color-declining);">⊕</div>
+                    <div>
+                        <div class="stat-value" id="stat-max">--</div>
+                        <div class="stat-label">MAX DEPTH</div>
+                        <div class="stat-sub">Deepest</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon" style="color: var(--color-brand);">≈</div>
+                    <div>
+                        <div class="stat-value" id="stat-avg">--</div>
+                        <div class="stat-label">AVG DEPTH</div>
+                        <div class="stat-sub">Average</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon" style="color: var(--color-recovering);">↗</div>
+                    <div>
+                        <div class="stat-value" id="stat-readings">--</div>
+                        <div class="stat-label">READINGS</div>
+                        <div class="stat-sub">Total Readings</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon" style="color: var(--color-declining);">⊘</div>
+                    <div>
+                        <div class="stat-value" id="stat-anomalies">--</div>
+                        <div class="stat-label">ANOMALIES</div>
+                        <div class="stat-sub" id="stat-anomaly-pct">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-footer text-muted">
+                All times in local timezone • Data quality: <span class="text-green" style="font-weight: 600;">Verified</span>
+            </div>
+        </main>
+
     </div>
 
     <!-- Scripts -->
