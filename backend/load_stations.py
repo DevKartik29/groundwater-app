@@ -1,9 +1,12 @@
 import csv
 import sqlite3
+import os
 from analytics import SPECIFIC_YIELD
 
+DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "groundwater.db"))
+
 def load_stations():
-    conn = sqlite3.connect("groundwater.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     
     # We'll keep a list of stations to bulk insert

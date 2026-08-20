@@ -2,6 +2,10 @@ import math
 import random
 import json
 from datetime import datetime, timedelta
+import sqlite3
+import os
+
+DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "groundwater.db"))
 
 def generate_station_data(station_id, start_date, trend_m_per_year, secret_broken_list, days=1095): # P3 Day 2: 3 years
     # Base depth of the water table (metres below ground)
@@ -79,7 +83,6 @@ def generate_station_data(station_id, start_date, trend_m_per_year, secret_broke
 
 if __name__ == "__main__":
     import csv
-    import sqlite3
     
     # Set fixed random seed so test data doesn't change between runs
     random.seed(42)
@@ -148,7 +151,7 @@ if __name__ == "__main__":
     # - Execute "DELETE FROM readings" to clear out any old test data
     # - Use executemany("INSERT INTO readings (station_id, ts, water_level_m_bgl, quality_flag, quality_reason) VALUES (?, ?, ?, ?, ?)", all_readings)
     # - Commit and close!
-    conn = sqlite3.connect("groundwater.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("DELETE FROM readings")
     cursor.executemany("INSERT INTO readings (station_id, ts, water_level_m_bgl, quality_flag, quality_reason) VALUES (?, ?, ?, ?, ?)", all_readings)

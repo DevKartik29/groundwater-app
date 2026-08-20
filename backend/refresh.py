@@ -1,12 +1,15 @@
 import dataclasses
 import sqlite3
+import os
+
+DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "groundwater.db"))
 from datetime import datetime
 
 # Import the math functions we just built!
 from analytics import calculate_trend, calculate_recharge, detect_anomalies, get_status
 
 def run_refresh():
-    conn = sqlite3.connect("groundwater.db")
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 

@@ -1,8 +1,11 @@
 import sqlite3
+import os
+
+DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "groundwater.db"))
 
 def init_db():
     # 1. Connect to the local database file (created if it doesn't exist)
-    conn = sqlite3.connect("groundwater.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     # 2. Execute raw SQL to create the stations table
